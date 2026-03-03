@@ -149,37 +149,28 @@ const Index = () => {
       {/* Header */}
       <header className="border-b border-border bg-card/80 backdrop-blur-sm sticky top-0 z-10">
         <div className="container mx-auto flex items-center justify-between py-4 px-4">
-          <div className="flex items-center gap-3">
-            <Trophy className="text-primary" size={28} />
-            <h1 className="text-xl font-display font-bold tracking-wider text-primary">
-              ROBO SCOUT
-            </h1>
-          </div>
-          <div className="flex gap-2">
-            <Sheet>
-              <SheetTrigger asChild>
-                <button className="flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-2 text-sm font-body font-semibold text-muted-foreground hover:text-foreground transition-all">
-                  <StickyNote size={16} /> Notas
-                </button>
-              </SheetTrigger>
-              <SheetContent side="right" className="bg-card border-border">
-                <SheetHeader>
-                  <SheetTitle className="font-display text-primary">Observações</SheetTitle>
-                </SheetHeader>
-                <div className="mt-4">
-                  <textarea
-                    value={observacoes}
-                    onChange={e => setObservacoes(e.target.value)}
-                    placeholder="Anotações sobre a partida..."
-                    className="w-full h-[calc(100vh-160px)] rounded-xl border border-border bg-background p-4 font-body text-sm text-foreground placeholder:text-muted-foreground focus:border-primary/50 focus:outline-none resize-none"
-                  />
-                </div>
-              </SheetContent>
-            </Sheet>
-            <button onClick={exportToExcel} className="flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-2 text-sm font-body font-semibold text-muted-foreground hover:text-foreground transition-all">
-              <Download size={16} /> Excel
-            </button>
-          </div>
+          <Sheet>
+            <SheetTrigger asChild>
+              <button className="rounded-lg border border-border bg-card p-2 text-muted-foreground hover:text-foreground transition-all">
+                <StickyNote size={20} />
+              </button>
+            </SheetTrigger>
+            <SheetContent side="left" className="bg-card border-border">
+              <SheetHeader>
+                <SheetTitle className="font-display text-primary">Observações</SheetTitle>
+              </SheetHeader>
+              <div className="mt-4">
+                <textarea
+                  value={observacoes}
+                  onChange={e => setObservacoes(e.target.value)}
+                  placeholder="Anotações sobre a partida..."
+                  className="w-full h-[calc(100vh-160px)] rounded-xl border border-border bg-background p-4 font-body text-sm text-foreground placeholder:text-muted-foreground focus:border-primary/50 focus:outline-none resize-none"
+                />
+              </div>
+            </SheetContent>
+          </Sheet>
+          <span className="text-sm font-display uppercase tracking-wider text-muted-foreground">Scouting</span>
+          <div className="w-9" /> {/* spacer */}
         </div>
       </header>
 
@@ -289,11 +280,16 @@ const Index = () => {
         {/* Histórico */}
         {history.length > 0 && (
           <section className="space-y-3 pb-8">
-            <h2 className="text-sm font-display uppercase tracking-widest text-foreground flex items-center gap-2">
+            <div className="flex items-center gap-2">
               <span className="h-px flex-1 bg-border" />
-              Histórico ({history.length} partidas)
+              <h2 className="text-sm font-display uppercase tracking-widest text-foreground">
+                Histórico ({history.length})
+              </h2>
+              <button onClick={exportToExcel} className="rounded-lg border border-border bg-card p-2 text-muted-foreground hover:text-foreground transition-all" title="Exportar Excel">
+                <Download size={16} />
+              </button>
               <span className="h-px flex-1 bg-border" />
-            </h2>
+            </div>
             <div className="overflow-x-auto rounded-xl border border-border">
               <table className="w-full text-sm font-body">
                 <thead>
