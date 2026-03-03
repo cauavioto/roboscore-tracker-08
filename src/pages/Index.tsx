@@ -3,8 +3,9 @@ import * as XLSX from "xlsx";
 import Counter from "@/components/Counter";
 import ToggleOption from "@/components/ToggleOption";
 import PercentageBadge from "@/components/PercentageBadge";
-import { Download, RotateCcw, Save, Trophy } from "lucide-react";
+import { Download, RotateCcw, Save, Trophy, StickyNote } from "lucide-react";
 import { toast } from "sonner";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
 interface MatchData {
   equipe: string;
@@ -24,6 +25,7 @@ interface MatchData {
   baseMaior: boolean;
   possuiOdometria: boolean;
   possuiLimelight: boolean;
+  observacoes: string;
   // Calculados
   pctAutoAcertos: number;
   pctTeleAcertos: number;
@@ -66,6 +68,7 @@ const Index = () => {
   const [baseMaior, setBaseMaior] = useState(false);
   const [possuiOdometria, setPossuiOdometria] = useState(false);
   const [possuiLimelight, setPossuiLimelight] = useState(false);
+  const [observacoes, setObservacoes] = useState("");
 
   const [history, setHistory] = useState<MatchData[]>(loadHistory);
 
@@ -81,7 +84,7 @@ const Index = () => {
     setArtefatosColetados(0); setArtefatosErros(0);
     setPossuiAutonomo(false); setBaseMenor(false); setBaseMaior(false);
     setPossuiOdometria(false); setPossuiLimelight(false);
-    setEquipe(""); setPartida("");
+    setEquipe(""); setPartida(""); setObservacoes("");
   };
 
   const saveMatch = () => {
@@ -92,7 +95,7 @@ const Index = () => {
       autoDisparos, autoAcertos,
       teleDisparos, teleAcertos,
       artefatosColetados, artefatosErros,
-      possuiAutonomo, baseMenor, baseMaior, possuiOdometria, possuiLimelight,
+      possuiAutonomo, baseMenor, baseMaior, possuiOdometria, possuiLimelight, observacoes,
       pctAutoAcertos: calcPct(autoAcertos, autoDisparos),
       pctTeleAcertos: calcPct(teleAcertos, teleDisparos),
       pctTotalAcertos: calcPct(totalAcertos, totalDisparos),
@@ -130,6 +133,7 @@ const Index = () => {
       "Base Maior": m.baseMaior ? "Sim" : "Não",
       "Odometria": m.possuiOdometria ? "Sim" : "Não",
       "Limelight": m.possuiLimelight ? "Sim" : "Não",
+      "Observações": m.observacoes || "",
     }));
 
     const wb = XLSX.utils.book_new();
@@ -152,7 +156,27 @@ const Index = () => {
             </h1>
           </div>
           <div className="flex gap-2">
-            <button onClick={exportToExcel} className="flex items-center gap-2 rounded-lg bg-accent/20 px-4 py-2 text-sm font-body font-semibold text-accent hover:bg-accent/30 transition-all">
+            <Sheet>
+              <SheetTrigger asChild>
+                <button className="flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-2 text-sm font-body font-semibold text-muted-foreground hover:text-foreground transition-all">
+                  <StickyNote size={16} /> Notas
+                </button>
+              </SheetTrigger>
+              <SheetContent side="right" className="bg-card border-border">
+                <SheetHeader>
+                  <SheetTitle className="font-display text-primary">Observações</SheetTitle>
+                </SheetHeader>
+                <div className="mt-4">
+                  <textarea
+                    value={observacoes}
+                    onChange={e => setObservacoes(e.target.value)}
+                    placeholder="Anotações sobre a partida..."
+                    className="w-full h-[calc(100vh-160px)] rounded-xl border border-border bg-background p-4 font-body text-sm text-foreground placeholder:text-muted-foreground focus:border-primary/50 focus:outline-none resize-none"
+                  />
+                </div>
+              </SheetContent>
+            </Sheet>
+            <button onClick={exportToExcel} className="flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-2 text-sm font-body font-semibold text-muted-foreground hover:text-foreground transition-all">
               <Download size={16} /> Excel
             </button>
           </div>
