@@ -42,9 +42,9 @@
     --success: 140 70% 45%;
     --success-foreground: 220 20% 7%;
 
-    --glow-primary: 0 0 20px hsl(180 100% 50% / 0.3);
-    --glow-accent: 0 0 20px hsl(140 70% 45% / 0.3);
-    --glow-destructive: 0 0 20px hsl(0 70% 55% / 0.3);
+    --glow-primary: none;
+    --glow-accent: none;
+    --glow-destructive: none;
 
     --sidebar-background: 220 18% 11%;
     --sidebar-foreground: 180 60% 80%;
@@ -94,9 +94,6 @@
     border-color: hsl(var(--primary) / 0.4);
   }
   .bg-grid {
-    background-image: 
-      linear-gradient(hsl(180 100% 50% / 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(180 100% 50% / 0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
+    background-image: none;
   }
 }
