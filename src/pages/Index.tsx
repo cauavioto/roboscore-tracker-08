@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import * as XLSX from "xlsx";
 import Counter from "@/components/Counter";
 import ToggleOption from "@/components/ToggleOption";
 import PercentageBadge from "@/components/PercentageBadge";
-import { Download, RotateCcw, Save, Trophy, StickyNote } from "lucide-react";
+import { Download, RotateCcw, Save, StickyNote, TrendingUp } from "lucide-react";
 import { toast } from "sonner";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
