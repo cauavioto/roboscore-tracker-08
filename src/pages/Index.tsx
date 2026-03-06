@@ -48,6 +48,7 @@ const saveHistory = (data: MatchData[]) => {
 };
 
 const Index = () => {
+  const navigate = useNavigate();
   const [equipe, setEquipe] = useState("");
   const [partida, setPartida] = useState("");
 
